@@ -1,0 +1,5 @@
+13 11 10 8 6 3 2 1 
+5-th largest is 6
+CPU time used during input = 9.6039e-05 nanoseconds
+CPU time used during calculations = 7.33e-07 anoseconds
+CPU time used during output = 0.00962369 nanoseconds
