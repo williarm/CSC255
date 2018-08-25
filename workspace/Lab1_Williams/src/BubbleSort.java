@@ -33,7 +33,7 @@ public class BubbleSort {
 	}
 
 	public void bubbleUp(int startIndex, int endIndex)
-	// Bubbles up values that are out of order from smallest to largest
+	// Bubbles up values that are out of order and swaps them
 	{
 		for (int index = endIndex; index > startIndex; index--) {
 			if (values[index] > values[index - 1]) {
@@ -63,6 +63,9 @@ public class BubbleSort {
 		while (scanner.hasNextLine()) {
 			if (scanner.hasNext()) {
 				data.add(scanner.nextInt());
+			}
+			else {
+				break;
 			}
 		}
 

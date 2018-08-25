@@ -16,7 +16,7 @@ public class BubbleSortDriver {
 
 		BubbleSort sort = new BubbleSort();
 
-		sort.readFile("in.txt");
+		sort.readFile("r100.txt");
 
 		t2 = System.nanoTime();
 
