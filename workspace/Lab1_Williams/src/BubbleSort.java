@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class BubbleSort {
 //Implements the BubbleSort algorithm
+//Some code referenced & modified from CSC 241 Lab 10 - Dale Joyce Weems Java Data Structures
 
 	int size;
 	int searchIndex;
