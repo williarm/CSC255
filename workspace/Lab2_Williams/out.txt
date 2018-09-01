@@ -1,0 +1,5 @@
+2
+777 548 3432 7834 9186
+Algorithm1: => p(2) =225249, 7.050e+02 nanoseconds, 4 +- operations, 4 *operations, 4 pow function calls
+Algorithm2: => p(2) =225249, 3.530e+02 nanoseconds, 4 +- operations, 4 *operations, 4 pow function calls
+Algorithm3: => p(2) =225249, 0.000e+00 nanoseconds, 5 +- operations, 5 *operations
