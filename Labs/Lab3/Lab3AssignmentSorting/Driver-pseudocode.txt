@@ -1,0 +1,116 @@
+/*
+ * Driver-pseudocode.txt
+ *  Created on: Sep 9, 2018
+ *      Author: Kamilla Murashkina
+ */
+
+bool algorithm1 (vector<int> a, int sumK, int first, int second)
+bool algorithm2 (vector<int> a, int sumK, int first, int second)
+void algorithms (const string inputFileName, const string outputFileName);
+
+void testFile(int numberFile)
+
+    const string number        = to_string(numberFile)
+    const string inputFile     = number+"_in.txt"
+    const string outputFile    = number+"_out.txt"
+
+    cout << "\n*** Testing file " << inputFile << "\n"
+
+    algorithms(inputFile, outputFile)
+
+    cout << "\nOK\n"
+
+end testFile
+
+int main()
+
+    try
+    
+        for (int i=1;i<=4;++i) testFile(i)
+
+    catch ( const exception& ex )
+    
+       cout << "Exception:" << ex.what() << "\n"
+    
+
+end_main
+
+
+void algorithms(const string inputFileName, const string outputFileName)
+
+	open inputstream (inputFileName)
+	
+	if cannot open,  throw runtime_error("Cannot open file "+inputFileName+" for reading")
+
+	open outstream (outputFileName)
+	if cannot open, throw runtime_error("Cannot open file "+outputFileName+" for writing")
+
+	chrono::duration<double> time1,time2
+	chrono::steady_clock::time_point t1,t2,t21,t22
+	
+	//Test heap sort.
+
+	cout    << "Before heap sort\n"
+	outData << "Before heap sort\n"
+
+
+	outputVector(outData, a, info)
+	outputVector(cout,    a, info)
+
+	cout    << "Algorithm1 calculation only O(n^2)\n"
+	outData << "Algorithm1 calculation only O(n^2)\n"
+	
+	t1= chrono::steady_clock::now()
+
+	alg1=algorithm1(a, sumK, first, second)
+	t2= chrono::steady_clock::now();
+	time1 = chrono::duration_cast<chrono::duration<double>>(t2 - t1)
+	if (alg1)
+	{
+		outstream << "Yes"<< "\n"
+		outstream << first << "+" << second << "=" << sumK << "\n"
+		
+	}
+	else
+	{
+		outstream << "No" << "\n"
+	}
+	outstream    << "Algorithm2 includes build heap and heap sort O(nlog(n))\n"
+	outstream    << "Calculation itself in Algorithm2 O(n)\n"
+	t21= chrono::steady_clock::now()
+	buildHeap(a, a.size())
+
+	heapSort(a, a.size())
+
+	alg2=algorithm2 (a, sumK, first, second)
+	t22= chrono::steady_clock::now()
+	time2 = chrono::duration_cast<chrono::duration<double>>(t22 - t21)
+
+	if (alg2)
+	{
+		outstream << "Yes" << "\n"
+		outstream << first << "+" << second << "=" << sumK << "\n"
+		
+	}
+	else
+	{
+		outstream << "No" << "\n"
+	}
+	outstream << "Algortihm1: "
+			 << time1.count()<<" nanoseconds,\n"
+	outstream << "Algortihm2: "
+			 << time2.count()<<" nanoseconds,\n"
+	close-outstream
+
+end_algorithms
+
+
+bool algorithm1(vector<int> a, int sumK, int first, int second)
+
+	//ToDo
+
+bool algorithm2 (vector<int> a, int sumK, int first, int second)
+
+	//ToDo
+
+

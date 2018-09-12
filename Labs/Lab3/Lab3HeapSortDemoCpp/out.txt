@@ -1,0 +1,9 @@
+Before heap sort
+HeapSort
+9 9 1 5 3 8 4 3 2 1 1 
+After build heap
+HeapSort
+9 9 8 5 3 1 4 3 2 1 1 
+After heap sort
+HeapSort
+1 1 1 2 3 3 4 5 8 9 9 

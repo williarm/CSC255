@@ -1,0 +1,8 @@
+2
+6 8 10 0 7 5 
+Algortihm1: => p(2)= 334, 1.6128e-05 nanoseconds,
+5 +-operations, 5 *operations, 5 pow function calls
+Algortihm2: => p(2)= 334, 4.399e-06 nanoseconds,
+5 +-operations, 5 *operations, 5 pow function calls
+Algortihm3: => p(2)= 334, 0 nanoseconds,
+6 +-operations, 6 *operations
