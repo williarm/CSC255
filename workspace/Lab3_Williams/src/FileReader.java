@@ -2,10 +2,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Vector;
 
 /**
- * Purpose: The FileReader class is designed to read an input file 
- * and store the data in an ArrayList.
+ * Purpose: The FileReader class is designed to read an input file and store the
+ * data in an ArrayList.
  * 
  * Constructors: FileReader
  * 
@@ -16,26 +17,25 @@ import java.util.Scanner;
  * 
  */
 
-
 public class FileReader {
 
-	static ArrayList<Double> data;
-	static String fileName;
+	ArrayList<String> data;
+	String fileName;
 
 	FileReader(String fileName) {
 		this.fileName = fileName;
 	}
 
-	static void readFile(String fileName) throws FileNotFoundException {
+	void readFile() throws FileNotFoundException {
 		// Reads a file and loads the values into an array list
 
-		data = new ArrayList<Double>();
+		data = new ArrayList<String>();
 
 		Scanner scanner = new Scanner(new File(fileName));
 
 		while (scanner.hasNextLine()) {
 			if (scanner.hasNext()) {
-				data.add((double) scanner.nextInt());
+				data.add(scanner.next());
 			} else {
 				break;
 			}
