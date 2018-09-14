@@ -71,6 +71,7 @@ public class SumOfNumbers {
 				+ System.getProperty("line.separator");
 		s += "Algorithm2: " + formatter.format(algorithm2Time).toLowerCase() + " nanoseconds,"
 				+ System.getProperty("line.separator");
+		s += "//calculation time in nanoseconds for both algorithms";
 		return s;
 	}
 
