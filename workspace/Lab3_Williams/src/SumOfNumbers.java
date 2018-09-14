@@ -191,7 +191,7 @@ public class SumOfNumbers {
 	}
 
 	// swap values in array
-	// Used Dale, Joyce, Weems Java Data Structures ch 11 for reference
+	// Some code referenced from CSC 241 Lab 10 - Dale Joyce Weems Java Data Structures
 	public void swapValues(int firstIndex, int secondIndex) {
 
 		int swapValue = values[firstIndex];
@@ -202,7 +202,7 @@ public class SumOfNumbers {
 
 	// get the location where the element should be moved to in the heap
 	// by comparing child nodes
-	// Used Dale, Joyce, Weems Java Data Structures ch 11 for reference
+	// Some code referenced from CSC 241 Lab 10 - Dale Joyce Weems Java Data Structures
 	public int getNewNode(int currentNode, int index, int value) {
 
 		int leftChild = (currentNode * 2) + 1;
@@ -233,7 +233,7 @@ public class SumOfNumbers {
 	}
 
 	// build the heap
-	// Used Dale, Joyce, Weems Java Data Structures ch 11 for reference
+	// Some code referenced from CSC 241 Lab 10 - Dale Joyce Weems Java Data Structures
 	public void buildHeap(int value, int root, int index) {
 
 		int currentNode = root;
@@ -251,7 +251,7 @@ public class SumOfNumbers {
 	}
 
 	// Heap Sort is an O(N log(N)) algorithm
-	// Used Dale, Joyce, Weems Java Data Structures ch 11 for reference
+	// Some code referenced from CSC 241 Lab 10 - Dale Joyce Weems Java Data Structures
 	public void heapSort() {
 
 		int i;
