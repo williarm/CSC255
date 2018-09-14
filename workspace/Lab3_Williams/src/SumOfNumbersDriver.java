@@ -29,19 +29,21 @@ public class SumOfNumbersDriver {
 
 			algorithm1Time = endTime - startTime;
 
-			// reset the array
+			// reset the array and results
 			s1.resetValues();
 
 			// run the heap sort
+
+			// run algorithm2
 			startTime = System.nanoTime();
 			s1.heapSort();
-			algo2Results = s1.algorithm2();
+			algo2Results = s1.algorithm2(0, s1.values.length - 1);
 			endTime = System.nanoTime();
 			algorithm2Time = endTime - startTime;
 
-			//System.out.println(s1.toString(algorithm1Time, algorithm2Time, algo1Results, algo2Results));
+			System.out.println(s1.toString(algorithm1Time, algorithm2Time, algo1Results, algo2Results));
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("File not found. Exiting program.");
 		}
 	}
