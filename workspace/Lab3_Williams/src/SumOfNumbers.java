@@ -3,10 +3,10 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 /**
- * Purpose: The SumOFNumbers class contains methods to find values within
- * a string of numbers that equal a particular sum. It uses two main algorithms,
- * first an O(N^2) algorithm and then an O(NlogN) algorithm that is run after
- * a heap sort is performed on the set of values. 
+ * Purpose: The SumOFNumbers class contains methods to find values within a
+ * string of numbers that equal a particular sum. It uses two main algorithms,
+ * first an O(N^2) algorithm and then an O(NlogN) algorithm that is run after a
+ * heap sort is performed on the set of values.
  * 
  * Constructors: SumOfNumbers
  * 
@@ -17,7 +17,6 @@ import java.util.Vector;
  * @since 2018-09-13
  * 
  */
-
 
 public class SumOfNumbers {
 
@@ -141,35 +140,53 @@ public class SumOfNumbers {
 		return results;
 	}
 
-	public Vector algorithm2(int firstIndex, int lastIndex) {
+	/*
+	 * public Vector algorithm2(int firstIndex, int lastIndex) {
+	 * 
+	 * int currentSum = values[firstIndex] + values[lastIndex];
+	 * 
+	 * // base case, exit if the sum equals k if (currentSum == k) {
+	 * results.add(true); results.add(values[firstIndex]);
+	 * results.add(values[lastIndex]); results.add(currentSum); return results; }
+	 * else { // if p1 = p2 and then check if sum is not equal to k if ((firstIndex
+	 * == lastIndex) && (currentSum != k)) { results.add(false); return results; }
+	 * // if p1 + p2 > k then p2-- if (currentSum > k) { return
+	 * algorithm2(firstIndex, lastIndex - 1); } // if p1 + p2 < k then p1++ else if
+	 * (currentSum < k) { return algorithm2(firstIndex + 1, lastIndex); }
+	 * 
+	 * } results.add(false); return results; }
+	 */
 
-		int currentSum = values[firstIndex] + values[lastIndex];
+	public Vector algorithm2() {
+		int p1 = 0;
+		int p2 = values.length - 1;
+		boolean sumFound = false;
+		int currentSum = 0;
 
-		// base case, exit if the sum equals k
-		if (currentSum == k) {
-			results.add(true);
-			results.add(values[firstIndex]);
-			results.add(values[lastIndex]);
-			results.add(currentSum);
-			return results;
-		} else {
-			// if p1 = p2 and then check if sum is not equal to k
-			if ((firstIndex == lastIndex) && (currentSum != k)) {
-				results.add(false);
-				return results;
-			}
-			// if p1 + p2 > k then p2--
-			if (currentSum > k) {
-				return algorithm2(firstIndex, lastIndex - 1);
-			}
-			// if p1 + p2 < k then p1++
-			else if (currentSum < k) {
-				return algorithm2(firstIndex + 1, lastIndex);
-			}
+		while (!sumFound) {
+			currentSum = values[p1] + values[p2];
 
+			if (currentSum == k) {
+				results.add(true);
+				results.add(values[p1]);
+				results.add(values[p2]);
+				results.add(currentSum);
+				sumFound = true;
+				break;
+			} else if ((p1 == p2) && (currentSum != k)) {
+				results.addElement(false);
+				sumFound = true;
+			} else if (currentSum > k) {
+				p2--;
+			} else if (currentSum < k) {
+				p1++;
+			}
 		}
-		results.add(false);
+		// currentSum = values[p1] + values[p2];
+		// System.out.println(currentSum);
+
 		return results;
+
 	}
 
 	// swap values in array

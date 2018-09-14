@@ -54,7 +54,7 @@ public class SumOfNumbersDriver {
 				// run the heap sort and algorithm2
 				startTime = System.nanoTime();
 				s1.heapSort();
-				algo2Results = (Vector<Object>) s1.algorithm2(0, s1.values.length - 1).clone();
+				algo2Results = (Vector<Object>) s1.algorithm2().clone();
 				endTime = System.nanoTime();
 
 				algorithm2Time = endTime - startTime;
