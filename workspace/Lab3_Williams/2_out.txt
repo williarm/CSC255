@@ -9,6 +9,6 @@ Algorithm2 includes build heap and heap sort O(nlog(n))
 Calculation itself in Algorithm2 O(n)
 Yes
 5+12=17
-Algorithm1: 7.052e3 nanoseconds,
-Algorithm2: 1.023e4 nanoseconds,
+Algorithm1: 1.199e4 nanoseconds,
+Algorithm2: 1.164e4 nanoseconds,
 //calculation time in nanoseconds for both algorithms

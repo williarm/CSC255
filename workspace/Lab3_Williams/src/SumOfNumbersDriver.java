@@ -70,8 +70,10 @@ public class SumOfNumbersDriver {
 				}
 
 			}
-		} catch (IOException e) {
+		} catch (IOException e ) {
 			System.out.println("File " + inFileName + " not found. Exiting program.");
+		} catch (Exception i) {
+			System.out.println("Exception occured: " + i);
 		}
 	}
 }

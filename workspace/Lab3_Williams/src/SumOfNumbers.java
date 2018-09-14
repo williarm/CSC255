@@ -48,23 +48,31 @@ public class SumOfNumbers {
 				+ System.getProperty("line.separator");
 		s += "Algorithm1 calculation only O(n^2)" + System.getProperty("line.separator");
 
-		if ((boolean) algo1Results.get(0)) {
-			s += "Yes" + System.getProperty("line.separator");
-			s += algo1Results.get(1) + "+" + algo1Results.get(2) + "=" + algo1Results.get(3)
-					+ System.getProperty("line.separator");
-		} else {
-			s += "No" + System.getProperty("line.separator");
+		try {
+			if ((boolean) algo1Results.get(0)) {
+				s += "Yes" + System.getProperty("line.separator");
+				s += algo1Results.get(1) + "+" + algo1Results.get(2) + "=" + algo1Results.get(3)
+						+ System.getProperty("line.separator");
+			} else {
+				s += "No" + System.getProperty("line.separator");
+			}
+		} catch (Exception e) {
+			System.out.println("Exception occured: " + e);
 		}
 
 		s += "Algorithm2 includes build heap and heap sort O(nlog(n))" + System.getProperty("line.separator");
 		s += "Calculation itself in Algorithm2 O(n)" + System.getProperty("line.separator");
 
-		if ((boolean) algo2Results.get(0)) {
-			s += "Yes" + System.getProperty("line.separator");
-			s += algo2Results.get(1) + "+" + algo2Results.get(2) + "=" + algo2Results.get(3)
-					+ System.getProperty("line.separator");
-		} else {
-			s += "No" + System.getProperty("line.separator");
+		try {
+			if ((boolean) algo2Results.get(0)) {
+				s += "Yes" + System.getProperty("line.separator");
+				s += algo2Results.get(1) + "+" + algo2Results.get(2) + "=" + algo2Results.get(3)
+						+ System.getProperty("line.separator");
+			} else {
+				s += "No" + System.getProperty("line.separator");
+			}
+		} catch (Exception e) {
+			System.out.println("Exception occured: " + e);
 		}
 
 		s += "Algorithm1: " + formatter.format(algorithm1Time).toLowerCase() + " nanoseconds,"
@@ -164,34 +172,40 @@ public class SumOfNumbers {
 		boolean sumFound = false;
 		int currentSum = 0;
 
-		while (!sumFound) {
-			currentSum = values[p1] + values[p2];
+		try {
+			while (!sumFound) {
 
-			if (currentSum == k) {
-				results.add(true);
-				results.add(values[p1]);
-				results.add(values[p2]);
-				results.add(currentSum);
-				sumFound = true;
-				break;
-			} else if ((p1 == p2) && (currentSum != k)) {
-				results.addElement(false);
-				sumFound = true;
-			} else if (currentSum > k) {
-				p2--;
-			} else if (currentSum < k) {
-				p1++;
+				currentSum = values[p1] + values[p2];
+
+				if (currentSum == k) {
+					results.add(true);
+					results.add(values[p1]);
+					results.add(values[p2]);
+					results.add(currentSum);
+					sumFound = true;
+					break;
+				} else if ((p1 == p2) && (currentSum != k)) {
+					results.addElement(false);
+					sumFound = true;
+				} else if (currentSum > k) {
+					p2--;
+				} else if (currentSum < k) {
+					p1++;
+				}
+
 			}
+		} catch (Exception e) {
+			System.out.println("Exception occured: " + e);
+			// currentSum = values[p1] + values[p2];
+			// System.out.println(currentSum);
+
 		}
-		// currentSum = values[p1] + values[p2];
-		// System.out.println(currentSum);
-
 		return results;
-
 	}
 
 	// swap values in array
-	// Some code referenced from CSC 241 Lab 10 - Dale Joyce Weems Java Data Structures
+	// Some code referenced from CSC 241 Lab 10 - Dale Joyce Weems Java Data
+	// Structures
 	public void swapValues(int firstIndex, int secondIndex) {
 
 		int swapValue = values[firstIndex];
@@ -202,7 +216,8 @@ public class SumOfNumbers {
 
 	// get the location where the element should be moved to in the heap
 	// by comparing child nodes
-	// Some code referenced from CSC 241 Lab 10 - Dale Joyce Weems Java Data Structures
+	// Some code referenced from CSC 241 Lab 10 - Dale Joyce Weems Java Data
+	// Structures
 	public int getNewNode(int currentNode, int index, int value) {
 
 		int leftChild = (currentNode * 2) + 1;
@@ -233,7 +248,8 @@ public class SumOfNumbers {
 	}
 
 	// build the heap
-	// Some code referenced from CSC 241 Lab 10 - Dale Joyce Weems Java Data Structures
+	// Some code referenced from CSC 241 Lab 10 - Dale Joyce Weems Java Data
+	// Structures
 	public void buildHeap(int value, int root, int index) {
 
 		int currentNode = root;
@@ -251,7 +267,8 @@ public class SumOfNumbers {
 	}
 
 	// Heap Sort is an O(N log(N)) algorithm
-	// Some code referenced from CSC 241 Lab 10 - Dale Joyce Weems Java Data Structures
+	// Some code referenced from CSC 241 Lab 10 - Dale Joyce Weems Java Data
+	// Structures
 	public void heapSort() {
 
 		int i;
