@@ -25,7 +25,7 @@ public class WriteFile {
 	}
 
 	public void writeLine(String string) throws IOException {
-		fileWriter.append(string + System.getProperty("line.separator"));
+		fileWriter.append(string);
 
 	}
 

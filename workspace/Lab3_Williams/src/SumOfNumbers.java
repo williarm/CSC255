@@ -1,7 +1,23 @@
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Vector;
+
+/**
+ * Purpose: The SumOFNumbers class contains methods to find values within
+ * a string of numbers that equal a particular sum. It uses two main algorithms,
+ * first an O(N^2) algorithm and then an O(NlogN) algorithm that is run after
+ * a heap sort is performed on the set of values. 
+ * 
+ * Constructors: SumOfNumbers
+ * 
+ * Methods: print, initValues, resetValues, algorithm1, algorithm2, swapValues,
+ * getNewNode, buildHeap, heapSort
+ * 
+ * @author Robert Williams
+ * @since 2018-09-13
+ * 
+ */
+
 
 public class SumOfNumbers {
 
@@ -11,7 +27,7 @@ public class SumOfNumbers {
 	static int k;
 	static Vector results;
 
-	// constructor
+	// constructor for SumOfNumbers
 	public SumOfNumbers(int size, int k) {
 		this.size = size;
 		this.values = new int[size];
@@ -20,37 +36,42 @@ public class SumOfNumbers {
 	}
 
 	// print the output
-	public String toString(long algorithm1Time, long algorithm2Time, Vector<?> algo1Results, Vector<?> algo2Results) {
+	public String print(long algorithm1Time, long algorithm2Time, Vector<?> algo1Results, Vector<?> algo2Results) {
+
 		String s = new String();
 
 		DecimalFormat formatter = new DecimalFormat("0.000E0");
 
-		s += k + "\n";
-		s += "Before heap sort\n";
-		s += "SumOfK\n";
-		s += java.util.Arrays.toString(backupValues).replace("[", "").replaceAll("]", "").replace(",", "") + "\n";
-		s += "Algorithm1 calculation only O(n^2)\n";
+		s += k + System.getProperty("line.separator");
+		s += "Before heap sort" + System.getProperty("line.separator");
+		s += "SumOfK" + System.getProperty("line.separator");
+		s += java.util.Arrays.toString(backupValues).replace("[", "").replaceAll("]", "").replace(",", "")
+				+ System.getProperty("line.separator");
+		s += "Algorithm1 calculation only O(n^2)" + System.getProperty("line.separator");
 
 		if ((boolean) algo1Results.get(0)) {
-			s += ("Yes\n");
-			s += algo1Results.get(1) + "+" + algo1Results.get(2) + "=" + algo1Results.get(3) + "\n";
+			s += "Yes" + System.getProperty("line.separator");
+			s += algo1Results.get(1) + "+" + algo1Results.get(2) + "=" + algo1Results.get(3)
+					+ System.getProperty("line.separator");
 		} else {
-			s += "No\n";
+			s += "No" + System.getProperty("line.separator");
 		}
 
-		s += "Algorithm2 includes build heap and heap sort O(nlog(n))\n";
-		s += "Calculation itself in Algorithm2 O(n)\n";
+		s += "Algorithm2 includes build heap and heap sort O(nlog(n))" + System.getProperty("line.separator");
+		s += "Calculation itself in Algorithm2 O(n)" + System.getProperty("line.separator");
 
 		if ((boolean) algo2Results.get(0)) {
-			s += ("Yes\n");
-			s += algo2Results.get(1) + "+" + algo2Results.get(2) + "=" + algo2Results.get(3) + "\n";
+			s += "Yes" + System.getProperty("line.separator");
+			s += algo2Results.get(1) + "+" + algo2Results.get(2) + "=" + algo2Results.get(3)
+					+ System.getProperty("line.separator");
 		} else {
-			s += "No\n";
+			s += "No" + System.getProperty("line.separator");
 		}
 
-		s += "Algorithm1: " + formatter.format(algorithm1Time).toLowerCase() + " nanoseconds,\n";
-		s += "Algorithm2: " + formatter.format(algorithm2Time).toLowerCase() + " nanoseconds,\n";
-
+		s += "Algorithm1: " + formatter.format(algorithm1Time).toLowerCase() + " nanoseconds,"
+				+ System.getProperty("line.separator");
+		s += "Algorithm2: " + formatter.format(algorithm2Time).toLowerCase() + " nanoseconds,"
+				+ System.getProperty("line.separator");
 		return s;
 	}
 
@@ -152,6 +173,7 @@ public class SumOfNumbers {
 	}
 
 	// swap values in array
+	// Used Dale, Joyce, Weems Java Data Structures ch 11 for reference
 	public void swapValues(int firstIndex, int secondIndex) {
 
 		int swapValue = values[firstIndex];
@@ -162,6 +184,7 @@ public class SumOfNumbers {
 
 	// get the location where the element should be moved to in the heap
 	// by comparing child nodes
+	// Used Dale, Joyce, Weems Java Data Structures ch 11 for reference
 	public int getNewNode(int currentNode, int index, int value) {
 
 		int leftChild = (currentNode * 2) + 1;
@@ -192,6 +215,7 @@ public class SumOfNumbers {
 	}
 
 	// build the heap
+	// Used Dale, Joyce, Weems Java Data Structures ch 11 for reference
 	public void buildHeap(int value, int root, int index) {
 
 		int currentNode = root;
@@ -209,6 +233,7 @@ public class SumOfNumbers {
 	}
 
 	// Heap Sort is an O(N log(N)) algorithm
+	// Used Dale, Joyce, Weems Java Data Structures ch 11 for reference
 	public void heapSort() {
 
 		int i;

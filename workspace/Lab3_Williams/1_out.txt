@@ -1,0 +1,13 @@
+13
+Before heap sort
+SumOfK
+5 12 8 10 7 4 3 5 5 3 2 1
+Algorithm1 calculation only O(n^2)
+Yes
+5+8=13
+Algorithm2 includes build heap and heap sort O(nlog(n))
+Calculation itself in Algorithm2 O(n)
+Yes
+1+12=13
+Algorithm1: 2.327e4 nanoseconds,
+Algorithm2: 1.375e4 nanoseconds,
