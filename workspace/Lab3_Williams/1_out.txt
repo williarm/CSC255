@@ -11,3 +11,4 @@ Yes
 1+12=13
 Algorithm1: 2.750e4 nanoseconds,
 Algorithm2: 1.516e4 nanoseconds,
+//calculation time in nanoseconds for both algorithms
