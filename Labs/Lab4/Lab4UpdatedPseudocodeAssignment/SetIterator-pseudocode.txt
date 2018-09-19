@@ -1,0 +1,72 @@
+class SetIterator<Key>
+
+    // BinaryNode is nested inside BinarySearchTree<Key>
+    // In the case of C++, add - typedef typename BinarySearchTree<Key>::BinaryNode BinaryNode;
+    // In the case of Java, use - BinarySearchTree<Key>.BinaryNode
+
+    public
+
+	constructor( constant Set<Key>* theSet, BinaryNode* theNode ) 
+
+		set  = theSet
+		node = theNode
+
+	boolean hasValue() constant
+
+		return node != null
+
+	void advance() 
+
+		node = set.nextNode(node)
+
+	constant Key& getElement() constant 
+
+		return node.element
+
+	BinaryNode* getNode() constant
+
+		return node
+
+	// In the case of C++, add the methods below if you want to use C++ iterator convention 
+
+	friend bool operator==( const SetIterator& lh, const SetIterator& rh) {
+		return lh.node == rh.node;
+	}
+
+	friend bool operator!=( const SetIterator& lh, const SetIterator& rh) {
+		return !(lh==rh);
+	}
+
+	SetIterator& operator++() {
+		advance();
+		return *this;
+	}
+
+	const Key& operator*() const {
+		return getElement();
+	}
+
+	// End of C++ specific code
+
+	// In the case of Java, add the methods below if you want to use Java iterator convention
+
+	bool hasNext()
+
+		return hasValue();
+	}
+
+	Key next() {
+		BinaryNode currentNode = node;
+		advance();
+		return currentNode.element;
+	}
+
+	// End of Java specific code
+
+    private
+
+	constant Set<Key>*  set
+	BinaryNode*    	    node
+
+		
+endclass /* SetIterator*/

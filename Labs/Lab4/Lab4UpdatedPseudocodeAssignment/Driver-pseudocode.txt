@@ -1,0 +1,147 @@
+// Compare set that we are building with the vector containing inputted persons
+// When the set is not complete, cannot use vectors size, need explicit size parameter 
+
+void compareData(
+
+	OUTPUT_STREAM&		fout
+	Set<string>&		people
+	vector<string>& 	dataOriginal
+	int 			size = -1
+)
+	if ( size == -1 ) size = data.size()
+
+	vector<string> dataTemp = COPY dataOriginal   // data now a copy of dataOriginal
+
+	SORT dataTemp[0..size-1]		      // sort dataTemp elements beginning at index 0 and ending at index size-1 
+
+	variable  person   = people.begin()
+	int 	  i        = 0
+
+	for (; person.hasValue() && i<size; ++i )
+
+		if ( dataTemp[i].empty() ) continue
+
+		if ( ! ( person.getElement() EQUAL dataTemp[i] ) ) 
+			fout << "ERROR: " << "data '" << dataTemp[i] << "' != set '" << person.getElement() << "'\n"
+			exit(1)
+		
+		person.advance()
+
+	if ( i != size ) 
+		fout << "ERROR: Set is smaller than data\n"
+		exit(1)
+	
+	if ( person.hasValue() ) 
+		fout << "ERROR: Set is larger than data\n"
+		exit(1)
+
+// Print all persons from people set
+
+void printPeople(
+
+	OUTPUT_STREAM&		fout
+	Set<string>& 		people
+	constant string&	description
+	constant boolean	doEndl = true
+) 
+	fout << description << "\n"
+	fout << "empty() " << people.size()  << "\n"
+	fout << "size()  " << people.empty() << "\n"
+	fout << "elements:\n"
+
+	for (variable person = people.begin(); person.hasValue(); person.advance())
+		fout << person.getElement() << endl
+
+	if ( doEndl ) fout << "\n"
+}
+
+// Find a person in a people set and print their name
+
+void findPerson( 
+
+	OUTPUT_STREAM&		fout
+	Set<string>& 		people
+	constant string& 	name 
+)
+
+	variable person = people.find(name)
+	if ( !person.hasValue() )
+	
+		fout << name << " is not an employee of this company!\n"	
+	else
+		constant string& foundName = person.getElement()
+		fout << name << " is an employee"
+		if ( !( foundName EQUAL name ) )
+			fout << ", but found name is " << foundName
+		fout << "\n"
+	endif
+
+// Main function
+
+int main() 
+
+  try 
+	
+	vector<string> 	data	// an "array" of persons	
+	Set<string> 	people	// a set of the same persons
+
+	// Read input file and store persons in data
+
+	string name		      // buffer string
+	INPUT_STREAM fin("in.txt")    // open in.txt file for reading
+	while ( fin >> name )         // read file into data
+		data.push_back(name)  // add to the vector's end
+	fin.close()		      // close in.txt
+
+	OUTPUT_STREAM fout("out.txt") // open out.txt file for reading
+
+	// Insert persons one by one in people set,
+	// comparing the set with data 
+
+	Set<string> people
+
+	fout << "--- Empty set\n"
+	printPeople( fout, people, "empty set" )
+
+	fout << "--- Inserting records\n"
+
+	int i = 0
+	for ( constant& s : data ) {
+		people.insert(s)
+		compareData( fout, people, data, i+=1 )
+	}
+
+	printPeople( fout, people, "sorted elements after inserting" )
+
+	// Erase one person
+
+	fout << "--- Erasing second record\n"
+
+	auto ix = people.begin()
+	ix.advance()
+	people.erase(ix)
+
+	printPeople( fout, people, "sorted elements after erasing" )
+
+	// Print all persons using iterator
+
+	fout << "--- Printing elements via iterator\n"
+	fout << "sorted elements again: \n"
+
+	for (variable person = people.begin(); person.hasValue(); person.advance() )
+		fout << person.getElement() << "\n"
+	fout << "\n"
+
+	// Find all persons 
+
+	fout << "--- Finding people\n"
+
+	for ( constant& s : data ) findPerson( fout, people, s )
+
+	fout << "\n"
+
+  catch ( constant exception& ex )
+  
+	fout << "Exception: " << ex.whatMessage() << "\n"
+  
+

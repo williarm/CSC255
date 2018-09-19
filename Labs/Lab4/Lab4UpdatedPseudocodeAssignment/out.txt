@@ -1,0 +1,45 @@
+--- Empty set
+empty set
+size()   0
+empty()  1
+elements:
+
+--- Inserting records
+sorted elements after inserting
+size()   6
+empty()  0
+elements:
+Anna
+Betty
+Ivan
+John
+Raquel
+Samuel
+
+--- Erasing second record
+sorted elements after erasing
+size()   5
+empty()  0
+elements:
+Anna
+Ivan
+John
+Raquel
+Samuel
+
+--- Printing elements via iterator
+sorted elements again: 
+Anna
+Ivan
+John
+Raquel
+Samuel
+
+--- Finding people
+Ivan is an employee
+Raquel is an employee
+Betty is not an employee of this company!
+Anna is an employee
+Samuel is an employee
+John is an employee
+

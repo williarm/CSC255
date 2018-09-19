@@ -1,0 +1,101 @@
+class Set<Key> 
+
+    private
+
+    	// BinaryNode is nested inside BinarySearchTree<Key>
+    	// In the case of C++, add - typedef typename BinarySearchTree<Key>::BinaryNode BinaryNode;
+    	// In the case of Java, use - BinarySearchTree<Key>.BinaryNode
+
+    	BinarySearchTree<Key> tree	// each set element is represented by one tree node
+
+    public
+
+	SetIterator begin() 
+		return SetIterator(this,tree.start())
+
+	SetIterator end() 
+		return SetIterator(this,null)
+	
+    	/**
+    	* Default & copy constructor(s)
+    	* In the case of C++ and Java consider defining two overloaded constructors
+    	* one without parameters and another with rhs parameter
+    	*/
+    	constructor( constant Set& rhs = null ) 
+
+		tree = rhs != null ? clone(rhs.tree) : null
+   
+    	/** 
+    	* Returns number of elements in the set
+    	*/
+    	size_type size() constant 
+
+		// TODO Implement method size using tree.start() and tree.next()
+		//      count the number of nodes in the tree
+	
+    	/**
+    	*  Returns true if there are no elements in the set
+    	*/
+    	boolean empty() constant
+
+    		// TODO Implement boolean method empty()
+
+    	/** 
+    	* Remove all elements from the set
+    	*/
+    	void clear() 
+
+		tree.makeEmpty()
+
+    	/**
+    	* Inserts new element in the set
+    	*/
+    	void insert( constant Key& key  )
+
+		tree.insert(key)
+
+    	/**
+    	* Removes one element from the set
+    	*/
+    	size_type erase( constant Key& key ) 
+
+		return tree.remove(key) ? 1 : 0;
+
+    	/**
+    	* Remove element that the iterator refers to
+    	*/
+    	size_type erase( constant SetIterator& iter ) 
+
+		// TODO Implement method erase() that removes tree node that the iterator refers to
+
+    	/**
+    	* Returns an iterator referring to the found element
+    	*/
+    	iterator find( constant Key& key ) constant 
+
+		// TODO Implement method find()
+
+    	/** 
+    	* Returns number of times some element occurs in the set
+   	*/
+    	size_type count( constant Key& key ) constant 
+
+		return tree.find(key) ? 1 : 0
+
+
+    	BinaryNode* nextNode( BinaryNode* node ) constant
+
+    		return tree.next(node)
+
+  private
+
+    	/** 
+	* Print all elements in sorted order
+	*/
+    	friend ostream operator<< ( ostream& os, constant Set<Key>& set ) {
+
+	set.tree.print(os);
+	return os;
+
+
+

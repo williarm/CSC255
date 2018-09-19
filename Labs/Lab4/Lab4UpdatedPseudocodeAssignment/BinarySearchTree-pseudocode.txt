@@ -1,0 +1,390 @@
+class BinarySearchTree<Comparable>
+	
+    public
+
+	class UnderflowException
+
+    	class BinaryNode
+
+        	Comparable  element
+        	BinaryNode* parent
+        	BinaryNode* left
+        	BinaryNode* right
+	
+        	constructor( const Comparable& theElement, BinaryNode* lt, BinaryNode* rt, BinaryNode* p )
+
+		    // You can assume that the theElement is immutable - theElement 
+		    // cannot be changed as long as it is in the tree. 
+
+          	    element  = theElement
+
+          	    parent  = p
+          	    left    = lt
+          	    right   = rt
+
+	endclass /* BinaryNode */
+
+    private
+
+    	BinaryNode *root
+
+    public
+
+    	/**
+     	* Default & copy constructor(s)
+	* In the case of C++ and Java consider defining two overloaded constructors
+	* one without parameters and another with rhs parameter
+     	*/
+    	constructor( constant BinarySearchTree& rhs = null ) 
+    
+        	root = rhs != null ? cloneTree( rhs.root ) : null
+
+    	/**
+    	 * Destructor for the tree (required for C++, not needed for Java or Python)
+     	*/
+    	destructor()
+    
+        	makeEmpty()
+    
+    	/**
+     	* Copy assignment
+     	*/
+    	BinarySearchTree& assign( constant BinarySearchTree& rhs )
+    
+		// TODO Implement assignment that copies all rhs nodes
+		//      so rhs and this tree can be modified independently 
+
+    	/**
+     	* Find the smallest item in the tree.
+     	* Throw UnderflowException if empty.
+     	*/
+    	constant Comparable& findMin() constant
+   
+        	if( isEmpty() ) throw UnderflowException
+
+        	return findMinNode( root ).element
+
+    	/**
+     	* Find the largest item in the tree.
+     	* Throw UnderflowException if empty.
+     	*/
+    	constant Comparable& findMax() constant
+    
+        	if( isEmpty() ) throw UnderflowException
+
+        	return findMaxNode( root ).element
+
+    	/**
+     	* Returns true if the element is found in the tree.
+     	*/
+    	boolean contains( constant Comparable& element ) constant
+    
+       	 	return containsElement( element, root )
+    
+
+    	/**
+     	* Test if the tree is logically empty.
+     	* Return true if empty, false otherwise.
+     	*/
+    	boolean isEmpty() constant
+    
+        	return root == null
+    
+
+    	/**
+     	* Print the tree contents in sorted order.
+     	*/
+    	void print( ostream& out = stdout ) constant
+    
+        	printTree( root, out )
+
+    	/**
+     	* Make the tree logically empty.
+     	*/
+    	void makeEmpty()
+    
+        	root = makeEmptyTree( root )
+    
+
+    	/**
+     	* Insert the element into the tree; duplicates are ignored.
+	* You can assume that the element is immutable - the element 
+	* cannot be changed as long as it is in the tree
+     	*/
+    	void insert( constant Comparable& element )
+    
+        	root = insertNode( element, root, null )
+    
+    	/**
+     	* Find the element in the tree and return corresponding node or null
+     	*/
+    	BinaryNode* find( constant Comparable& element ) constant
+    
+        	return findNode( element, root )
+
+    	/**
+     	* Remove the element from the tree. Nothing is done if it is not found.
+     	*/
+    	boolean remove( constant Comparable& element )
+    	{
+        	return removeTreeNode( find(element) )
+    	}
+
+    	/**
+     	* Remove the node from the tree.
+     	*/
+    	boolean removeNode( BinaryNode* node )
+    
+        	return removeTreeNode( node )
+    
+	
+	BinaryNode* startNode() constant
+	
+		return mostLeftNode(root)
+	
+
+    	static BinaryNode* nextNode( BinaryNode* t )
+    	
+		// We already traversed
+		// - all left descendants
+		// - node t itself
+
+    		if ( t == null ) return null
+
+    		BinaryNode *q = t.right
+
+    		if ( q )
+
+    		  // There is right child, return right smallest grandchild
+
+    		  q = mostLeftNode(q)
+
+    		else 
+
+    		  // There is no right child. It means that node t 
+		  // and all its descendants are traversed.
+
+    		  q = t
+		  loop
+		  	q = q.parent
+			if ( q == null || t == q.left ) break
+			t = q
+              	  endloop
+
+		endif
+
+    		return q
+
+    private	// Note that all methods below are static except removeTreeNode()
+
+	static BinaryNode* mostLeftNode( BinaryNode* q )
+	
+		if (q) 
+			while ( q.left ) q = q.left
+		
+		return q
+
+    	/**
+     	* Internal method to find an element in a subtree.
+     	* x is the element to find.
+     	* t is the node that roots the subtree.
+     	* Returns the found node or nullptr.
+	* Non-recursive version
+     	*/
+
+    	static BinaryNode*  findNode( constant Comparable& x, BinaryNode* t )
+    
+        	while( t != null )
+        
+		    // Replace LESS with value comparison appropriate to your language 
+
+            	    if( x LESS t.element )	
+			t = t.left 
+            	    else if( t.element LESS x ) 
+                	t = t.right
+            	    else
+                	return t    	// Match
+		    endif
+
+                endwhile
+
+                return null   		// No match
+
+//    	/**
+//     	* Internal method to find an element in a subtree.
+//     	* x is the item to find.
+//     	* t is the node that roots the subtree.
+//     	* Returns the found node or nullptr.
+//	* Recursive version
+//     	*/
+//      static BinaryNode* findNode( constant Comparable& x, constant BinaryNode* constant t  )
+//    	
+//        	return  t == null		? null
+//        	 :	x LESS t.element 	? findNode( x, t.left )
+//        	 :	t.element LESS x   	? findNode( x, t.right )
+//        	 :	/* equal */	  	  t
+
+    	/**
+     	* Internal method to insert into a subtree.
+     	* x is the item to insert.
+     	* t is the node that roots the subtree.
+     	* Set the new root of the subtree.
+     	*/
+    	static BinaryNode* insertNode( constant Comparable& x, BinaryNode* t, BinaryNode *p )
+    
+		// Replace LESS with value comparison appropriate to your language 
+
+        	if ( t == null        ) return new BinaryNode( x, null, null, p )
+        	if ( x LESS t.element ) return insertNode( x, t.left,  t )
+        	if ( t.element LESS x ) return insertNode( x, t.right, t )
+        	
+		// Duplicate; do nothing
+   		return t
+    	
+    	/**
+     	* Internal method to move node from one parent to another.
+     	* s is the old node
+     	* q is the new node to be moved under s's parent
+     	* Set the new root of the subtree.
+     	*/
+
+    	static void repointNodeParent(
+
+    		constant BinaryNode* s  // old node
+		BinaryNode*          q  // new node
+	)
+    
+		BinaryNode* p = s.parent
+        	( p.left == s ? p.left : p.right ) = q
+        	if ( q ) q.parent = p
+   
+    	/**
+     	* Internal method to replace one node with another.
+     	* u is the node to replace
+     	* m is the mode that replaces it
+     	* Returns m.
+     	*/
+    	static BinaryNode* replaceTreeNode( BinaryNode* u, BinaryNode* m )
+    
+    		if (m) repointNodeParent( m, null )
+    		repointNodeParent( u, m )
+    		return m
+   
+    	/**
+     	* Internal method to remove from the tree.
+     	* p is the node to remove
+     	* Set the new root of the tree.
+     	*/
+    	boolean removeTreeNode( BinaryNode* p )	// Non-static method
+    
+        	if( p == null ) return false    // Item not found; do nothing
+
+        	BinaryNode *m = ( p.left && p.right )
+			      ? replaceTreeNode( p, mostLeft(p.right) )  // Two children
+			      : replaceTreeNode( p, p.left ? p.left : p.right )
+
+        	if ( root == p ) root = m
+
+		delete p
+
+        	return true
+    
+    	/**
+     	* Internal method to find the smallest item in a subtree t.
+     	* Return node containing the smallest item.
+	* Recursive algorithm
+     	*/
+    	static BinaryNode* findMinNode( BinaryNode* t )
+    
+        	if( t == null      ) return null
+        	if( t.left == null ) return t
+
+        	return findMinNode( t.left )    
+
+    	/**
+     	* Internal method to find the largest item in a subtree t.
+     	* Return node containing the largest item.
+	* Non-recursive algorithm 
+     	*/
+    	static BinaryNode* findMaxNode( BinaryNode* t )
+    
+        	if( t != null ) 
+            	    while( t.right != null ) t = t.right
+        
+        	return t    	
+
+    	/**
+     	* Internal method to test if an item is in a subtree.
+     	* x is item to search for
+     	* t is the node that roots the subtree
+	* Non-recursive algorithm
+     	*/
+
+    	static boolean containsElement( constant Comparable& x, BinaryNode* t )
+    
+    		return findNode( x, t )
+   
+//	/**
+//     	* Internal method to test if an item is in a subtree.
+//     	* x is item to search for
+//     	* t is the node that roots the subtree
+//	* Recursive algorithm
+//     	*/
+//
+//    	static boolean containsElement( constant Comparable& x, BinaryNode* t ) constant
+//    
+//        	if( t == null         ) return false
+//        	if( x LESS t.element ) return containsElement( x, t.left  )
+//        	if( t.element LESS x ) return containsElement( x, t.right )
+//       
+//            	return true    // Match
+
+    	/**
+     	* Internal method to make subtree empty.
+     	*/
+    	static BinaryNode* makeEmptyTree( BinaryNode* t )
+    
+        	if( t != null )
+        
+            	    makeEmpty( t.left  )
+            	    makeEmpty( t.right )
+            	    delete t
+        
+        	return null
+   
+    	/**
+     	* Internal method to print a subtree rooted at t in sorted order.
+        * Recursive algorithm
+     	*/
+    	static void printTree( constant BinaryNode* t, ostream& out )
+    
+        	if( t != null )
+        
+            	    printTree( t.left, out )
+            	    out << t.element << "\n"
+            	    printTree( t.right, out )
+
+		else
+
+            	    out << "Empty tree\n"
+
+		endif
+        
+       /**
+       * Internal method to clone subtree.
+       */
+       static BinaryNode* cloneTree(
+
+    	    	constant BinaryNode* t 	  	  // node to clone
+		BinaryNode*          p = null     // parent of the clone node
+	)
+    
+        	if( t == null ) return null
+
+        	BinaryNode* node = new BinaryNode( t.element, null, null, p )
+
+        	node.left  = cloneTree( t.left,  node )
+        	node.right = cloneTree( t.right, node )
+
+        	return node
+
