@@ -1,0 +1,143 @@
+Method overload
+
+    C++ 
+    Java
+    Python
+
+def my_function (a, b=None, c=None, d=None) :
+    if b is None:
+        subprocess.call(['proc', a])
+    elif c is None:
+        subprocess.call(['proc','-i',a,b])
+    else:
+        subprocess.call(['proc','-i',a,b,'-u',c,d])
+    return; 
+
+
+Operator overload
+
+    C++ yes
+    Java no
+ 
+     Python
+
+def __eq__(self, other):
+    # Note: generally, floats should not be compared directly
+    # due to floating-point precision
+    return (self.real == other.real) and (self.imag == other.imag)
+
+Operator ++
+
+    C++	operator++()
+    Java   cannot be overloaded
+    Python no such operator
+
+Operator ==
+
+    C++ can be overloaded, by default compares content
+    Java cannot be overloaded, compares references
+    Python can be overloaded, by default compares references
+
+Operator=
+
+    C++ can be overloaded, by default copies content
+    Java   cannot be overload, copies references
+    Python cannot be overload, copies references
+
+Cloning
+
+    C++ operator=
+    Java MyClass copy = (MyClass) obj.clone();
+
+    Python 
+
+      lodos_deep_copy = copy.deepcopy(list_of_dict_of_set)
+
+Operator<
+
+	C++ operator<
+     Java  int compareTo(T o) 
+     Python object.__le__(self, other) # For x <= y
+
+New
+
+	C++ int* p = new int(7);
+	Point originOne = new Point(23, 94);
+	sammy = Shark()
+
+Return type
+
+	C++   int f() or auto f() -> int
+	Java  int f()
+	Python  def get_first_name(full_name: str) -> str:
+
+Variable type
+
+	C++ int i;
+     Java int i;
+     Python variable_name: type
+
+constructor
+
+     C++   Bicycle() {}
+     Java  public Bicycle()
+     Python  def __init__(self, Name="there")
+
+foreach loop
+
+	Java  for (Suit suit : suits)
+
+iterator
+
+     Java  
+
+    Iterator<String> it = names.iterator();
+ 
+    while(it.hasNext()) {
+      String obj = it.next();
+      System.out.println(obj);
+    }
+
+Nested classes
+
+    C++
+
+	class A { 		 // B is not A's friend
+		int g;	 // A::g is not visible to B
+		class B {}; // A::this is not available
+	};
+	
+    Java
+
+	class A { 		 // B is A's friend
+		int g;	 // A::g is visible to B
+		class B { ...{g=0;} }; 
+	};
+
+	static class A { // B is not A's friend
+		int g;	 // A::g is not visible to B
+		class B {}; // A::this is not available
+	};
+
+    Python
+
+     class Human:
+ 
+         def __init__(self):
+             self.name = 'Guido'
+             self.head = self.Head()
+ 
+     class Head:
+         def talk(self):
+    	        return 'talking...'
+ 
+     if __name__ == '__main__':
+         guido = Human()
+         print guido.name
+         print guido.head.talk()
+
+Constants
+
+	C++	const				// variables, parameters, 
+						// return values, methods
+	Java final int n = 5; 	// variables and parameters only
