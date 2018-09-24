@@ -9,8 +9,8 @@ public class BinarySearchTree<E> {
 	 *
 	 */
 
-	private BinaryNode<E> root;
-	private Comparator<? super E> cmp;
+	BinaryNode<E> root;
+	Comparator<? super E> cmp;
 
 	public BinarySearchTree() {
 		root = null;
@@ -145,6 +145,48 @@ public class BinarySearchTree<E> {
 	// mostLeftNode
 	// findNode
 
+	// start custom methods
+
+	BinaryNode<E> findNode(E x, BinaryNode<E> t) {
+		int compareResult = myCompare(x, t.element);
+		while (t != null) {
+			if (compareResult < 0) {
+				t = t.left;
+			} else if (compareResult > 0) {
+				t = t.right;
+			} else {
+				return t;
+			}
+		}
+		return null;
+
+	}
+
+	BinaryNode<E> find(E element) {
+		return findNode(element, root);
+	}
+
+	BinaryNode startNode() {
+		return mostLeftNode(root);
+	}
+
+	public BinaryNode<E> next(BinaryNode node) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	BinaryNode<E> mostLeftNode(BinaryNode q) {
+		if (q.left != null) {
+			while (q.left.hasNext()) {
+				System.out.println("In the loop");
+				q = q.left;
+			}
+		}
+		return q.left;
+	}
+
+	// end custom methods
+
 	/********************************************************************************
 	 * 
 	 * End of BinarySearchTree methods
@@ -179,7 +221,7 @@ public class BinarySearchTree<E> {
 	 * Start of BinaryNode class
 	 *
 	 */
-	public static class BinaryNode<E> {
+	public static class BinaryNode<E> implements Iterator {
 		// Constructors
 		BinaryNode(E theElement) {
 			this(theElement, null, null);
@@ -194,6 +236,18 @@ public class BinarySearchTree<E> {
 		E element; // The data in the node
 		BinaryNode<E> left; // Left child
 		BinaryNode<E> right; // Right child
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public Object next() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	/********************************************************************************
