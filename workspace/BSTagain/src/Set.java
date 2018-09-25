@@ -1,21 +1,30 @@
 import java.util.Iterator;
 
-//import BinarySearchTree.BinaryNode;
+//Implement the following TODO methods:
+// constructor clone
+// size
+// empty
+// erase
+// find
 
 public class Set<E> {
 
 	BinarySearchTree<E> tree;
+	SetIterator<E> setIterator;
 
 	public Set() {
 		tree = new BinarySearchTree<E>();
+		setIterator = new SetIterator<E>(this, tree.root);
 	}
 
 	public SetIterator begin() {
-		return new SetIterator<E>(this, tree.root);
+		return setIterator;
+		// return new SetIterator<E>(this, tree.root);
 	}
 
 	public SetIterator end() {
-		return new SetIterator<E>(this, null);
+		setIterator = new SetIterator<E>(this, null);
+		return setIterator; // new SetIterator<E>(this, null);
 	}
 
 	final int size() {
@@ -27,7 +36,7 @@ public class Set<E> {
 
 	final boolean empty() {
 		// TODO implement boolean method empty();
-		return false;
+		return tree.isEmpty();
 	}
 
 	void clear() {
@@ -35,6 +44,11 @@ public class Set<E> {
 	}
 
 	void insert(E key) {
+		if (tree.isEmpty()) {
+			System.out.println("Tree is empty");
+		} else {
+			System.out.println("Tree is not empty");
+		}
 		tree.insert(key);
 	}
 

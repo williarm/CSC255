@@ -1,5 +1,6 @@
+import java.util.Iterator;
 
-public class SetIterator<E> {
+public class SetIterator<E> implements Iterator {
 	Set<E> set;
 	BinarySearchTree.BinaryNode<E> node;
 
@@ -18,5 +19,21 @@ public class SetIterator<E> {
 
 	final E getElement() {
 		return node.element;
+	}
+
+	BinarySearchTree.BinaryNode<E> getNode() {
+		return node;
+	}
+
+	@Override
+	public boolean hasNext() {
+		return hasValue();
+	}
+
+	@Override
+	public E next() {
+		BinarySearchTree.BinaryNode<E> currentNode = node;
+		advance();
+		return currentNode.element;
 	}
 }
