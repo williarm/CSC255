@@ -17,20 +17,30 @@ public class Driver {
 		}
 
 		SetIterator<String> person = people.begin();
-		
+
 		for (int i = 0; person.hasNext() && i < size; i++) {
-			if(dataTemp.isEmpty()) {
-				
+			if (dataTemp.isEmpty()) {
+				continue;
 			}
 			if (!(person.getElement().equals(dataTemp.get(i)))) {
 				System.out.println("Equals");
+				output = "ERROR: data '" + dataTemp.get(i) + "' != set '" + person.getElement() + "'\n";
+				System.out.println(output);
+				break;
 			}
-			person.advance();
-		}
 
-		while (person.hasNext()) {
-			System.out.println(person.getElement());
 			person.advance();
+
+			if (i != size) {
+				output = "ERROR: Set is smaller than data\n";
+				System.out.println(output);
+				break;
+			}
+			if (person.hasValue()) {
+				output = "ERROR: Set is larger than data\n";
+				System.out.println(output);
+				break;
+			}
 		}
 
 		person = people.end();
@@ -62,6 +72,7 @@ public class Driver {
 			}
 
 			compareData(output, people, data, data.size());
+			System.out.println(output);
 
 		} catch (Exception e) {
 			System.out.println("Exception: " + e);
