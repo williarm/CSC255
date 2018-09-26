@@ -1,85 +1,111 @@
-import java.util.Iterator;
+import java.util.*;
 
-//Implement the following TODO methods:
-// constructor clone
-// size
-// empty
-// erase
-// find
+public class Set<Key> {
 
-public class Set<E> {
-
-	BinarySearchTree<E> tree;
-	SetIterator<E> setIterator;
-
-	public Set() {
-		tree = new BinarySearchTree<E>();
-		setIterator = new SetIterator<E>(this, tree.root);
-	}
+	public BinarySearchTree tree; // each set element is represented by one tree node
 
 	public SetIterator begin() {
-		return setIterator;
-		// return new SetIterator<E>(this, tree.root);
+		System.out.println("In Set.begin");
+		return new SetIterator(this, tree.startNode());
 	}
 
 	public SetIterator end() {
-		setIterator = new SetIterator<E>(this, null);
-		return setIterator; // new SetIterator<E>(this, null);
+		System.out.println("In Set.end");
+		return new SetIterator(this, null);
+		// return setIterator; // new SetIterator<E>(this, null);
 	}
 
-	final int size() {
-		// TODO Implement method size using tree.start() and tree.next()
+	public Set() {
+		System.out.println("In Set constructor (non parameterized)");
+		tree = new BinarySearchTree();
+	}
+
+	public Set(final BinarySearchTree rhs) {
+		System.out.println("In Set constructor (parameterized)");
+		if (rhs != null)
+			tree = rhs;
+		else
+			tree = null;
+	}
+
+	/** 
+	* Returns number of elements in the set
+	*/
+	public final int size() {
+		System.out.println("In Set.size");
+		int size = 0;
+		while (tree.nextNode(tree.startNode()) != null) {
+			size++;
+		}
+		// TODO Implement method size using tree.startNode() and tree.next()
 		// count the number of nodes in the tree
 		// tree.startNode();
-		return 0;
+		return size;
 	}
 
-	final boolean empty() {
-		// TODO implement boolean method empty();
+	/**
+	*  Returns true if there are no elements in the set
+	*/
+	public final boolean empty() {
+		System.out.println("In Set.empty");
 		return tree.isEmpty();
 	}
 
-	void clear() {
+	/** 
+	* Remove all elements from the set
+	*/
+	public void clear() {
+		System.out.println("In Set.clear");
 		tree.makeEmpty();
 	}
 
-	void insert(E key) {
-		if (tree.isEmpty()) {
-			System.out.println("Tree is empty");
-		} else {
-			System.out.println("Tree is not empty");
-		}
-		tree.insert(key);
+	/**
+	* Inserts new element in the set
+	*/
+	public void insert(final Key key) {
+		System.out.println("In Set.insert");
+		tree.insert((Comparable) key);
 	}
 
-	int erase(E key) {
-		tree.remove(key);
-		return 0;
+	/**
+	* Removes one element from the set
+	*/
+	public int erase(final Key key) {
+		System.out.println("In Set.erase");
+		return tree.remove((Comparable) key) ? 1 : 0;
 	}
 
-	// Returns an interator referring to the found element
-	Iterator find(E key) {
+	/**
+	* Remove element that the iterator refers to
+	*/
+	public int erase(final SetIterator iter) {
+		return tree.remove((Comparable) iter.getElement()) ? 1 : 0;
+	}
+
+	/**
+	* Returns an iterator referring to the found element
+	*/
+	public final Iterator find(final Key key) {
+		System.out.println("In Set.fine");
 		// TODO Implement find method
 		return null;
 	}
 
-	int count(E key) {
-		if (tree.find(key) != null) {
-			return 1;
-		} else {
-			return 0;
-		}
+	/** 
+	* Returns number of times some element occurs in the set
+	*/
+	public final int count(final Key key) {
+		System.out.println("In Set.count");
+		return tree.find((Comparable) key) != null ? 1 : 0;
 	}
 
-	BinarySearchTree.BinaryNode<E> nextNode(BinarySearchTree.BinaryNode node) {
-		return tree.next(node);
+	public BinarySearchTree.BinaryNode nextNode(BinarySearchTree.BinaryNode node) {
+		System.out.println("In Set.nextNode");
+		return tree.nextNode(node);
 	}
-
-	// BinarySearchTree.BinaryNode nextNode(BinarySearchTree.BinaryNode node) {
-	// return tree.next(node);
-	// }
 
 	private void print() {
+		System.out.println("In Set.print");
 
 	}
 }

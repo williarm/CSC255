@@ -1,204 +1,13 @@
-import java.util.Comparator;
-import java.util.Iterator;
+import java.lang.Comparable;
 
-public class BinarySearchTree<E> {
-
-	/********************************************************************************
-	 * 
-	 * Start of BinarySearchTree methods
-	 *
-	 */
-
-	BinaryNode<E> root;
-	Comparator<? super E> cmp;
-
-	public BinarySearchTree() {
-		root = null;
-	}
-
-	public void insert(E x) {
-		root = insert(x, root);
-	}
-
-	public void remove(E x) {
-		root = remove(x, root);
-	}
-
-	public E findMin() {
-		if (isEmpty())
-			throw new UnderflowException();
-		return findMin(root).element;
-	}
-
-	public E findMax() {
-		if (isEmpty())
-			throw new UnderflowException();
-		return findMax(root).element;
-	}
-
-	public boolean contains(E x) {
-		return contains(x, root);
-	}
-
-	public void makeEmpty() {
-		root = null;
-	}
-
-	public boolean isEmpty() {
-		return root == null;
-	}
-
-	public void printTree() {
-		if (isEmpty())
-			System.out.println("Empty tree");
-		else
-			printTree(root);
-	}
-
-	private int myCompare(E lhs, E rhs) {
-		if (cmp != null)
-			return cmp.compare(lhs, rhs);
-		else
-			return ((Comparable) lhs).compareTo(rhs);
-	}
-
-	private BinaryNode<E> insert(E x, BinaryNode<E> t) {
-		if (t == null)
-			return new BinaryNode<>(x, null, null);
-
-		int compareResult = myCompare(x, t.element);
-
-		if (compareResult < 0)
-			t.left = insert(x, t.left);
-		else if (compareResult > 0)
-			t.right = insert(x, t.right);
-		else
-			; // Duplicate; do nothing
-		return t;
-	}
-
-	private BinaryNode<E> remove(E x, BinaryNode<E> t) {
-		if (t == null)
-			return t; // Item not found; do nothing
-
-		int compareResult = myCompare(x, t.element);
-
-		if (compareResult < 0)
-			t.left = remove(x, t.left);
-		else if (compareResult > 0)
-			t.right = remove(x, t.right);
-		else if (t.left != null && t.right != null) // Two children
-		{
-			t.element = findMin(t.right).element;
-			t.right = remove(t.element, t.right);
-		} else
-			t = (t.left != null) ? t.left : t.right;
-		return t;
-	}
-
-	private BinaryNode<E> findMin(BinaryNode<E> t) {
-		if (t == null)
-			return null;
-		else if (t.left == null)
-			return t;
-		return findMin(t.left);
-	}
-
-	private BinaryNode<E> findMax(BinaryNode<E> t) {
-		if (t != null)
-			while (t.right != null)
-				t = t.right;
-
-		return t;
-	}
-
-	private boolean contains(E x, BinaryNode<E> t) {
-		if (t == null)
-			return false;
-
-		int compareResult = myCompare(x, t.element);
-
-		if (compareResult < 0)
-			return contains(x, t.left);
-		else if (compareResult > 0)
-			return contains(x, t.right);
-		else
-			return true; // Match
-	}
-
-	private void printTree(BinaryNode<E> t) {
-		if (t != null) {
-			printTree(t.left);
-			System.out.println(t.element);
-			printTree(t.right);
-		}
-	}
-
-	private int height(BinaryNode<E> t) {
-		if (t == null)
-			return -1;
-		else
-			return 1 + Math.max(height(t.left), height(t.right));
-	}
-
-	// nextNode
-	// mostLeftNode
-	// findNode
-
-	// start custom methods
-
-	BinaryNode<E> findNode(E x, BinaryNode<E> t) {
-		int compareResult = myCompare(x, t.element);
-		while (t != null) {
-			if (compareResult < 0) {
-				t = t.left;
-			} else if (compareResult > 0) {
-				t = t.right;
-			} else {
-				return t;
-			}
-		}
-		return null;
-
-	}
-
-	BinaryNode<E> find(E element) {
-		return findNode(element, root);
-	}
-
-	BinaryNode startNode() {
-		return mostLeftNode(root);
-	}
-
-	public BinaryNode<E> next(BinaryNode node) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	BinaryNode<E> mostLeftNode(BinaryNode q) {
-		if (q.left != null) {
-			while (q.left.hasNext()) {
-				System.out.println("In the loop");
-				q = q.left;
-			}
-		}
-		return q.left;
-	}
-
-	// end custom methods
-
-	/********************************************************************************
-	 * 
-	 * End of BinarySearchTree methods
-	 *
-	 */
+public class BinarySearchTree<Key extends Comparable<Key>> {
 
 	/********************************************************************************
 	 * 
 	 * Start of UnderflowException class
 	 *
 	 */
-	private static class UnderflowException extends RuntimeException {
+	public static class UnderflowException extends RuntimeException {
 
 		UnderflowException(String message) {
 			super(message);
@@ -221,33 +30,35 @@ public class BinarySearchTree<E> {
 	 * Start of BinaryNode class
 	 *
 	 */
-	public static class BinaryNode<E> implements Iterator {
+	public class BinaryNode {
+
+		Comparable element; // The data in the node
+		BinaryNode parent; // Parent node
+		BinaryNode left; // Left child
+		BinaryNode right; // Right child
+
 		// Constructors
-		BinaryNode(E theElement) {
+		BinaryNode(Comparable theElement) {
 			this(theElement, null, null);
+			System.out.println("In BinaryNode constructor (single parameter)");
 		}
 
-		BinaryNode(E theElement, BinaryNode<E> lt, BinaryNode<E> rt) {
+		BinaryNode(Comparable theElement, BinaryNode lt, BinaryNode rt) {
+			System.out.println("In BinaryNode  Constructor (3 parameters)");
 			element = theElement;
 			left = lt;
 			right = rt;
 		}
 
-		E element; // The data in the node
-		BinaryNode<E> left; // Left child
-		BinaryNode<E> right; // Right child
-
-		@Override
-		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return false;
+		public BinaryNode(final Comparable theElement, BinaryNode lt, BinaryNode rt, BinaryNode p) {
+			System.out.println("In BinaryNode constructor (4 parameters)");
+			element = theElement;
+			parent = p;
+			left = lt;
+			right = rt;
+			System.out.println(element);
 		}
 
-		@Override
-		public Object next() {
-			// TODO Auto-generated method stub
-			return null;
-		}
 	}
 
 	/********************************************************************************
@@ -256,4 +67,308 @@ public class BinarySearchTree<E> {
 	 *
 	 */
 
+	/********************************************************************************
+	 * 
+	 * Start of BinarySearchTree methods
+	 *
+	 */
+
+	BinaryNode root;
+	// Comparator<? super Comparable> cmp;
+
+	public BinarySearchTree() {
+		System.out.println("In BinarySearchTree constructor (non-parameterized)");
+		root = null;
+	}
+
+	public BinarySearchTree(BinarySearchTree<Key> rhs) {
+		System.out.println("In BinarySearchTree constructor (parameterized)");
+		if (rhs != null) {
+			root = cloneTree(rhs.root, root);
+		} else {
+			root = null;
+		}
+	}
+
+	public void getRoot() {
+		if (root != null) {
+			System.out.println("Root is not null");
+		} else {
+			System.out.println("Root is null");
+		}
+	}
+
+	private void printTree(BinaryNode t) {
+		System.out.println("In BinarySearchTree.printTree (parameterized)");
+		if (t != null) {
+			printTree(t.left);
+			System.out.println(t.element);
+			printTree(t.right);
+		}
+	}
+
+	public void printTree() {
+		System.out.println("In BinarySearchTree.printTree (non-parameterized)");
+		if (isEmpty())
+			System.out.println("Empty tree");
+		else
+			printTree(root);
+	}
+
+	BinarySearchTree<Key> assign(final BinarySearchTree<Key> rhs) {
+		System.out.println("In BinarySearchTree.assign");
+		BinarySearchTree<Key> newTree = new BinarySearchTree<Key>();
+		newTree = rhs;
+		return newTree;
+	}
+
+	final Key findMin() {
+		if (isEmpty()) {
+			throw new UnderflowException();
+		}
+		return (Key) findMinNode(root).element;
+
+	}
+
+	final Key findMax() {
+		if (isEmpty()) {
+			throw new UnderflowException();
+		}
+		return (Key) findMaxNode(root).element;
+	}
+
+	boolean isEmpty() {
+		System.out.println("In BinarySearchTree.isEmpty");
+		return root == null;
+	}
+
+	void print() {
+		System.out.println("In BinarySearchTree.print");
+		printTree(root);
+	}
+
+	void makeEmpty() {
+		System.out.println("In BinarySearchTree.makeEmpty");
+		root = makeEmptyTree(root);
+	}
+
+	void insert(final Key element) {
+		System.out.println("In BinarySearchTree.insert");
+		root = insertNode(element, root, null);
+	}
+
+	BinaryNode find(final Key key) {
+		System.out.println("In BinarySearchTree.find");
+		return findNode(key, root);
+	}
+
+	boolean remove(final Key key) {
+		System.out.println("In BinarySearchTree.remove");
+		return removeTreeNode(find(key));
+	}
+
+	boolean removeNode(BinaryNode node) {
+		System.out.println("In BinarySearchTree.removeNode");
+		return removeTreeNode(node);
+	}
+
+	BinaryNode startNode() {
+		System.out.println("In BinarySearchTree.startNode");
+		return mostLeftNode(root);
+	}
+
+	BinaryNode nextNode(BinaryNode t) {
+		System.out.println("In BinarySearchTree.nextNode");
+		if (t == null) {
+			return null;
+		}
+		BinaryNode q = t.right;
+		if (q != null) {
+			q = mostLeftNode(q);
+		} else {
+			q = t;
+			while (q != null) {
+				q = q.parent;
+				if (q == null || t == q.left) {
+					break;
+				}
+				t = q;
+			}
+		}
+		return q;
+	}
+
+	BinaryNode mostLeftNode(BinaryNode q) {
+		System.out.println("In BinarySearchTree.mostLeftNode");
+		if (q != null) {
+			while (q.left != null) {
+				System.out.println("In the loop");
+				q = q.left;
+			}
+		}
+		return q;
+	}
+
+	BinaryNode findNode(Key x, BinaryNode t) {
+		System.out.println("In BinarySearchTree.findNode");
+		int compareResult;
+		while (t != null) {
+			compareResult = x.compareTo((Key) t.element);
+			if (compareResult < 0) {
+				t = t.left;
+			} else if (compareResult > 0) {
+				t = t.right;
+			} else {
+				return t;
+			}
+		}
+		return null;
+
+	}
+
+	BinaryNode insertNode(Key x, BinaryNode t, BinaryNode p) {
+		System.out.println("In BinarySearchTree.insertNode method");
+		if (t == null) {
+			System.out.println("In BinarySearchTree.insertNode method - First IF");
+			return new BinaryNode(x, null, null, p);
+		}
+		int compareResult = x.compareTo((Key) t.element);
+
+		if (compareResult < 0) {
+			System.out.println("In BinarySearchTree.insertNode method - Second IF");
+			// System.out.println("in second if");
+			return insertNode(x, t.left, t);
+		}
+		if (compareResult > 0) {
+			System.out.println("In BinarySearchTree.insertNode method - Third IF");
+			return insertNode(x, t.right, t);
+		}
+		// Duplicate do nothing
+		System.out.println("In BinarySearchTree.insertNode method - Fourth Condition");
+		return t;
+	}
+
+	void repointNodeParent(BinaryNode s, BinaryNode q) {
+		System.out.println("In BinarySearchTree.repointParentNode");
+		BinaryNode p = s.parent;
+		if (p.left == s) {
+			p.left = q;
+		} else {
+			p.right = q;
+		}
+		if (q != null) {
+			q.parent = p;
+		}
+	}
+
+	BinaryNode replaceTreeNode(BinaryNode u, BinaryNode m) {
+		System.out.println("In BinarySearchTree.replaceTreeNode");
+		if (m != null) {
+			repointNodeParent(m, null);
+			repointNodeParent(u, m);
+		}
+		return m;
+	}
+
+	boolean removeTreeNode(BinaryNode p) {
+		System.out.println("In BinarySearchTree.removeTreeNode");
+		if (p == null) {
+			return false;
+		}
+		BinaryNode m = (p.left != null && p.right != null) ? replaceTreeNode(p, mostLeftNode(p.right))
+				: replaceTreeNode(p, p.left != null ? p.left : p.right);
+		if (root == p) {
+			m = root;
+		}
+		return true;
+	}
+
+	BinaryNode findMinNode(BinaryNode t) {
+		System.out.println("In BinarySearchTree.findMinNode");
+		if (isEmpty()) {
+			throw new UnderflowException();
+		}
+		if (t == null) {
+			return null;
+		}
+		if (t.left == null) {
+			return t;
+		}
+		return findMinNode(t.left);
+	}
+
+	BinaryNode findMaxNode(BinaryNode t) {
+		System.out.println("In BinarySearchTree.findMaxNode");
+		if (isEmpty()) {
+			throw new UnderflowException();
+		}
+		if (t != null) {
+			while (t.right != null) {
+				t = t.right;
+			}
+		}
+		return t;
+	}
+
+	boolean containsElement(Key x, BinaryNode t) {
+		System.out.println("In BinarySearchTree.containsElement");
+		if (t == null) {
+			return false;
+		}
+
+		int compareResult = x.compareTo((Key) t.element);
+
+		if (compareResult < 0) {
+			return containsElement(x, t.left);
+		}
+		if (compareResult > 0) {
+			return containsElement(x, t.right);
+		}
+		return true;
+	}
+
+	void makeEmpty(BinaryNode t) {
+		System.out.println("In BinarySearchTree.makeEmpty");
+		root = makeEmptyTree(root);
+	}
+
+	BinaryNode makeEmptyTree(BinaryNode t) {
+		System.out.println("In BinarySearchTree.makeEmptyTree");
+		if (t != null) {
+			makeEmpty(t.left);
+			makeEmpty(t.right);
+			// t.remove();
+		}
+		return null;
+	}
+
+	void printTree2(BinaryNode t, String output) {
+		System.out.println("In BinarySearchTree.printTree2");
+		if (t != null) {
+			printTree2(t.left, t.left.element.toString());
+			printTree2(t.right, t.right.element.toString());
+		} else {
+			output = "Empty tree\n";
+		}
+	}
+
+	BinaryNode cloneTree(BinaryNode t, BinaryNode p) {
+		System.out.println("In BinarySearchTree.cloneTree");
+		if (t == null) {
+			return null;
+		}
+
+		BinaryNode node = new BinaryNode(t.element, null, null, p);
+
+		node.left = cloneTree(t.left, node);
+		node.right = cloneTree(t.right, node);
+
+		return node;
+	}
+
+	/********************************************************************************
+	 * 
+	 * End of BinarySearchTree methods
+	 *
+	 */
 }
